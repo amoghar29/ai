@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 import { useForm } from "react-hook-form";
 // import { zodResolver } from "@hookform/resolvers/zod";
 // import { signupSchema } from "../../validation/userSchema"; // Import your Zod schema
@@ -30,15 +31,13 @@ export default function SignupForm() {
     setIsLoading(true);
 
     try {
-      // Replace this with your API call
-      console.log("Form Data:", data);
-      // Simulate API call
-      setTimeout(() => {
-        alert("Signup successful!");
-        setIsLoading(false);
-      }, 3000);
+      const response = await axios.post("/signup", data);
+      console.log("Signup successful:", response.data);
+      // Handle successful signup (e.g., redirect to login or show a success message)
     } catch (error) {
       console.error("Error:", error);
+      // Handle error (e.g., show an error message)
+    } finally {
       setIsLoading(false);
     }
   };
