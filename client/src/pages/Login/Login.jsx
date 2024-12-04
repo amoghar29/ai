@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { signinSchema } from "@/validation/userSchema";
-import { z } from "zod";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Icons } from "@/components/ui/icons";
-
+// import { zodResolver } from "@hookform/resolvers/zod";
+// import { signinSchema } from "@/validation/userSchema";
+// import { z } from "zod";
+// import { button } from "@/components/ui/button";
+// import { input } from "@/components/ui/input";
+// import { label } from "@/components/ui/label";
+// import { Icons } from "@/components/ui/icons";
+// 
 export default function LoginForm() {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -16,7 +16,7 @@ export default function LoginForm() {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(signinSchema),
+    // resolver: zodResolver(signinSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -50,8 +50,8 @@ export default function LoginForm() {
       </div>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div className="space-y-2">
-          <Label htmlFor="email">Email</Label>
-          <Input
+          <label htmlFor="email">Email</label>
+          <input
             id="email"
             placeholder="john@example.com"
             type="email"
@@ -63,8 +63,8 @@ export default function LoginForm() {
           )}
         </div>
         <div className="space-y-2">
-          <Label htmlFor="password">Password</Label>
-          <Input
+          <label htmlFor="password">Password</label>
+          <input
             id="password"
             type="password"
             {...register("password")}
@@ -75,8 +75,8 @@ export default function LoginForm() {
           )}
         </div>
         <div className="space-y-2">
-          <Label htmlFor="confirm-password">Confirm Password</Label>
-          <Input
+          <label htmlFor="confirm-password">Confirm Password</label>
+          <input
             id="confirm-password"
             type="password"
             {...register("confirmPassword")}
@@ -88,12 +88,12 @@ export default function LoginForm() {
             </p>
           )}
         </div>
-        <Button className="w-full" type="submit" disabled={isLoading}>
+        <button className="w-full" type="submit" disabled={isLoading}>
           {isLoading && (
-            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+            <p>Loading...</p>
           )}
           Login
-        </Button>
+        </button>
       </form>
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
@@ -105,10 +105,10 @@ export default function LoginForm() {
           </span>
         </div>
       </div>
-      <Button variant="outline" type="button" className="w-full">
-        <Icons.google className="mr-2 h-4 w-4" />
+      <button variant="outline" type="button" className="w-full">
+        <p> google icon</p>
         Login with Google
-      </Button>
+      </button>
     </div>
   );
 }

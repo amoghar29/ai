@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { signupSchema } from "@/validation/userSchema"; // Import your Zod schema
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Icons } from "@/components/ui/icons";
-import SocialButtons from "@/components/Auth/SocialButtons";
+// import { zodResolver } from "@hookform/resolvers/zod";
+// import { signupSchema } from "../../validation/userSchema"; // Import your Zod schema
+// import { button } from "@/components/ui/button";
+// import { input } from "@/components/ui/input";
+// import { label } from "@/components/ui/label";
+// import { Icons } from "@/components/ui/icons";
+// import SocialButtons from "@/components/Auth/SocialButtons";
 
 // Define form default values
 const defaultValues = {
@@ -23,8 +23,7 @@ export default function SignupForm() {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(signupSchema), // Use Zod schema for validation
-    defaultValues,
+    defaultValues
   });
 
   const onSubmit = async (data) => {
@@ -54,8 +53,8 @@ export default function SignupForm() {
       </div>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div className="space-y-2">
-          <Label htmlFor="username">Username</Label>
-          <Input
+          <label htmlFor="username">Username</label>
+          <input
             id="username"
             placeholder="JohnDoe"
             {...register("username")}
@@ -66,8 +65,8 @@ export default function SignupForm() {
           )}
         </div>
         <div className="space-y-2">
-          <Label htmlFor="email">Email</Label>
-          <Input
+          <label htmlFor="email">Email</label>
+          <input
             id="email"
             placeholder="john@example.com"
             type="email"
@@ -79,8 +78,8 @@ export default function SignupForm() {
           )}
         </div>
         <div className="space-y-2">
-          <Label htmlFor="password">Password</Label>
-          <Input
+          <label htmlFor="password">Password</label>
+          <input
             id="password"
             type="password"
             {...register("password")}
@@ -90,10 +89,11 @@ export default function SignupForm() {
             <p className="text-sm text-red-500">{errors.password.message}</p>
           )}
         </div>
-        <Button className="w-full" type="submit" disabled={isLoading}>
-          {isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
+        <button className="w-full" type="submit" disabled={isLoading}>
+          {/* {isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />} */}
+          <p>loading</p>
           Sign Up
-        </Button>
+        </button>
       </form>
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
@@ -105,7 +105,6 @@ export default function SignupForm() {
           </span>
         </div>
       </div>
-      <SocialButtons />
     </div>
   );
 }
