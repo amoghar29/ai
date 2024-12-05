@@ -5,7 +5,6 @@ import cookieParser from "cookie-parser";
 import passport from "passport";
 import authRouter from "./src/routes/auth.route.js";
 import { connectDB } from "./src/db/connectdb.js";
-import WebSocket from "ws";
 
 config();
 
@@ -18,29 +17,10 @@ app.use(cookieParser());
 app.use(passport.initialize());
 app.use("/api/auth", authRouter);
 
-// WebSocket server
-const wss = new WebSocket.Server({ noServer: true });
-
 app.server = app.listen(PORT, () => {
   connectDB();
   console.log("Server is running on port: ", PORT);
 });
-
-// Handle WebSocket connections
-app.server.on("upgrade", (request, socket, head) => {
-  wss.handleUpgrade(request, socket, head, (ws) => {
-    wss.emit("connection", ws, request);
-  });
-});
-
-// Broadcast function to send messages to all connected clients
-const broadcast = (message) => {
-  wss.clients.forEach((client) => {
-    if (client.readyState === WebSocket.OPEN) {
-      client.send(JSON.stringify(message));
-    }
-  });
-};
 
 // Example: Detecting a person and broadcasting the state
 const detectPerson = (detected) => {
@@ -50,8 +30,15 @@ const detectPerson = (detected) => {
   } else {
     message.action = "toggle_off"; // No person detected, toggle light off
   }
-  broadcast(message);
+  // broadcast(message);
 };
+
+// New HTTP endpoint for detection
+app.post("/api/detect", (req, res) => {
+  const { detected } = req.body;
+  detectPerson(detected);
+  res.status(200).json({ message: "Detection processed", detected });
+});
 
 // Simulate person detection (replace this with your actual detection logic)
 setInterval(() => {
